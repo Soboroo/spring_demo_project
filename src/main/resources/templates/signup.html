@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+  <div th:replace="~{fragment/navbar :: navbarFragment}"></div>
+    <div class="container">
+        <div class="tile">
+            <div class="tile is-parent is-vertical">
+                <div class="tile is-child box">
+                    <h1 class="title">회원가입</h1>
+                    <form action="/verification" method="post">
+                        <div class="field">
+                            <label class="label">학교 이메일</label>
+                            <div class="control">
+                                <input class="input" type="text" name="username" placeholder="example@sch.ac.kr">
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-link">인증 메일 전송</button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-link is-light">취소</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+</body>
+</html>

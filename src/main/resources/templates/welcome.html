@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+  <div th:replace="~{fragment/navbar :: navbarFragment}"></div>
+    <div class="container">
+        <div class="tile">
+            <div class="tile is-parent is-vertical">
+                <div class="tile is-child box">
+                    <h1 class="title">회원가입 완료</h1>
+                    <h1 th:text="'환영합니다, ' + ${username} + '님! 지금부터 순천향대학교 재학생분들과 합리적인 소비 라이프를 즐겨보세요!'" class="subtitle"></h1>
+                    <a href="/login" class="button is-link">로그인</a>
+                    <a href="/" class="button is-link is-light">홈으로</a>
+                </div>
+            </div>
+    </div>
+</body>
+</html>
