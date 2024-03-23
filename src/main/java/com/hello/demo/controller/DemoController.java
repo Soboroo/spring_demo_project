@@ -1,14 +1,25 @@
 package com.hello.demo.controller;
 
+import com.hello.demo.dto.StudentVerificationDTO;
+import com.hello.demo.service.StudentVerificationService;
+import com.hello.demo.util.StudentVerificationUtil;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class DemoController {
+    private final StudentVerificationService studentVerificationService;
+
     @GetMapping("/")
     public String index() {
         return "index";
@@ -68,5 +79,20 @@ public class DemoController {
     @GetMapping("/error")
     public String error() {
         return "error";
+    }
+
+    @PostMapping("/api/signup/verification")
+    public ResponseEntity signupVerification(@ModelAttribute StudentVerificationDTO studentVerificationDTO) {
+        if (StudentVerificationUtil.isStudent(studentVerificationDTO.getEmail())) {
+            try {
+                studentVerificationDTO.setKey(StudentVerificationUtil.createKey());
+                studentVerificationService.save(studentVerificationDTO);
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().build();
+            }
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
