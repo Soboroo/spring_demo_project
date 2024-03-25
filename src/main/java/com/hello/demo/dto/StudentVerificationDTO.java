@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -18,7 +18,7 @@ public class StudentVerificationDTO {
     private String uuid = UUID.randomUUID().toString();
     private String email;
     private String key;
-    private Date createdAt = new Date(System.currentTimeMillis());
+    private Date createdAt = new Date();
     private Date expiredAt = new Date(System.currentTimeMillis() + 20 * 60 * 1000);
 
     public static StudentVerificationDTO toStudentVerificationDTO(StudentVerificationEntity studentVerificationEntity) {

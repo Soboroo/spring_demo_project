@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:fragment="pagination(page)" class="pagination is-centered" role="navigation" aria-label="pagination">
+    <a th:if="${page} > 1" th:href="|/items?page=${page - 1}|" class="pagination-previous">Previous</a>
+    <a th:href="|/items?page=${page + 1}|" class="pagination-next">Next page</a>
+    <ul class="pagination-list">
+        <li><a th:unless="${page} < 3" th:href="|/items?page=1|" class="pagination-link" aria-label="Goto page 1">1</a></li>
+        <li th:unless="${page} < 3"><span class="pagination-ellipsis">&hellip;</span></li>
+        <li><a th:if="1 < ${page}" th:text="${page} - 1" th:href="|/items?page=${page - 1}|" class="pagination-link" aria-label="Goto page 45">45</a></li>
+        <li><a th:text="${page}" class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a></li>
+        <li><a th:text="${page} + 1" th:href="|/items?page=${page + 1}|" class="pagination-link" aria-label="Goto page 47">47</a></li>
+        <li><a th:if="${page} == 1" th:text="${page} + 2" th:href="|/items?page=${page + 2}|" class="pagination-link" aria-label="Goto page 47">47</a></li>
+        <li><span class="pagination-ellipsis">&hellip;</span></li>
+        <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
+    </ul>
+</nav>
+</body>
+</html>

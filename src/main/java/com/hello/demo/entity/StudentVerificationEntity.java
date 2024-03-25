@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -26,10 +26,11 @@ public class StudentVerificationEntity {
     @Column(name = "verification_key")
     private String key;
 
-    @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt = new Date(System.currentTimeMillis());
+    @Column(name = "created_at")
+    private Date createdAt = new Date();
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "expired_at")
     private Date expiredAt = new Date(System.currentTimeMillis() + 20 * 60 * 1000);
 

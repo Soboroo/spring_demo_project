@@ -19,4 +19,21 @@ public class StudentVerificationService {
         StudentVerificationEntity studentVerificationEntity = StudentVerificationEntity.toStudentVerificationEntity(studentVerificationDTO);
         studentVerificationRepository.save(studentVerificationEntity);
     }
+
+    public void delete(String email) {
+        StudentVerificationEntity studentVerificationEntity = studentVerificationRepository.findByEmail(email).orElse(null);
+        if (studentVerificationEntity != null) {
+            studentVerificationRepository.delete(studentVerificationEntity);
+        }
+    }
+
+    public boolean verification(String email, String key) {
+        StudentVerificationEntity studentVerificationEntity = studentVerificationRepository.findByEmail(email).orElse(null);
+        if (studentVerificationEntity != null) {
+            if (studentVerificationEntity.getKey().equals(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
