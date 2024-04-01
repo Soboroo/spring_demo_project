@@ -18,7 +18,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class DemoController {
-    private final StudentVerificationService studentVerificationService;
     private final StoreItemService storeItemService;
 
     @GetMapping("/")
@@ -48,50 +47,8 @@ public class DemoController {
         return "createItem";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @GetMapping("/signup")
-    public String signup() {
-        return "signup";
-    }
-
-    @GetMapping("/signup/step2")
-    public String signupStep2(Model model, @RequestParam(value="email") String email, @RequestParam(value="key") String key) {
-        if (studentVerificationService.verification(email, key)) {
-            model.addAttribute("email", email);
-            return "signup2";
-        } else {
-            return "error";
-        }
-    }
-
-    @GetMapping("/welcome")
-    public String welcome(Model model) {
-        model.addAttribute("username", "Yeongyun Woo");
-        return "welcome";
-    }
-
     @GetMapping("/error")
     public String error() {
         return "error";
-    }
-
-    @PostMapping("/api/signup/verification")
-    public ResponseEntity signupVerification(@ModelAttribute StudentVerificationDTO studentVerificationDTO) {
-        if (StudentVerificationUtil.isStudent(studentVerificationDTO.getEmail())) {
-            try {
-                studentVerificationDTO.setKey(StudentVerificationUtil.createKey());
-                studentVerificationService.save(studentVerificationDTO);
-                System.out.printf("http://localhost:8080/signup/step2?email=%s&key=%s\n", studentVerificationDTO.getEmail(), studentVerificationDTO.getKey());
-            } catch (Exception e) {
-                return ResponseEntity.badRequest().build();
-            }
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
     }
 }
