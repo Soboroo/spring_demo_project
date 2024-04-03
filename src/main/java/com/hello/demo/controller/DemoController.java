@@ -1,18 +1,11 @@
 package com.hello.demo.controller;
 
 import com.hello.demo.dto.StoreItemDTO;
-import com.hello.demo.dto.StudentVerificationDTO;
-import com.hello.demo.entity.StoreItemEntity;
 import com.hello.demo.service.StoreItemService;
-import com.hello.demo.service.StudentVerificationService;
-import com.hello.demo.util.StudentVerificationUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

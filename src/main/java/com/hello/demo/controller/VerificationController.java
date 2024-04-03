@@ -3,14 +3,12 @@ package com.hello.demo.controller;
 import com.hello.demo.dto.StudentVerificationDTO;
 import com.hello.demo.service.StudentVerificationService;
 import com.hello.demo.util.StudentVerificationUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,6 +18,12 @@ public class VerificationController {
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @PostMapping("/api/login")
+    public ResponseEntity login(Model model, HttpServletRequest request) {
+        System.out.printf("email: %s, password: %s", request.getParameter("email"), request.getParameter("password"));
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/signup")

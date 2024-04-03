@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js" integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
   <div th:replace="~{fragment/navbar :: navbarFragment}"></div>
@@ -12,11 +13,11 @@
             <div class="tile is-parent is-vertical">
                 <div class="tile is-child box">
                     <h1 class="title">로그인</h1>
-                    <form action="/login" method="post">
+                    <form id="login_form" action="/api/login" method="post">
                         <div class="field">
                             <label class="label">아이디</label>
                             <div class="control">
-                                <input class="input" type="text" name="username" placeholder="아이디를 입력하세요">
+                                <input class="input" type="text" name="email" placeholder="이메일을 입력하세요">
                             </div>
                         </div>
                         <div class="field">
@@ -27,15 +28,38 @@
                         </div>
                         <div class="field is-grouped">
                             <div class="control">
-                                <button class="button is-link">로그인</button>
+                                <button type="submit" class="button is-link">로그인</button>
                             </div>
                             <div class="control">
-                                <button class="button is-link is-light">취소</button>
+                                <button onclick="location.href='/'" class="button is-link is-light">취소</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+        </div>
     </div>
+  <script>
+      const form = document.querySelector('#login_form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const email = formData.get('email');
+            const password = window.CryptoJS.SHA256(formData.get('password')).toString();
+            formData.set('email', email);
+            formData.set('password', password);
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData
+            });
+            const result = response.status;
+            if (result === 200) {
+                alert('로그인 성공');
+                location.href = '/';
+            } else {
+                alert('로그인 실패');
+            }
+        });
+  </script>
 </body>
 </html>
