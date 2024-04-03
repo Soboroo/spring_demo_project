@@ -31,7 +31,11 @@ public class StudentVerificationService {
         StudentVerificationEntity studentVerificationEntity = studentVerificationRepository.findByEmail(email).orElse(null);
         if (studentVerificationEntity != null) {
             if (studentVerificationEntity.getKey().equals(key)) {
-                return true;
+                if (studentVerificationEntity.getExpiredAt().getTime() > System.currentTimeMillis()) {
+                    return true;
+                } else {
+                    studentVerificationRepository.delete(studentVerificationEntity);
+                }
             }
         }
         return false;
