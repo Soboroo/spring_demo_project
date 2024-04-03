@@ -12,7 +12,7 @@
             <div class="tile is-parent is-vertical">
                 <div class="tile is-child box">
                     <h1 class="title">회원가입</h1>
-                    <form action="/verification" method="post">
+                    <form id="verification_form" action="api/signup/verification" method="post">
                         <div class="field">
                             <label class="label">학교 이메일</label>
                             <div class="control">
@@ -21,15 +21,34 @@
                         </div>
                         <div class="field is-grouped">
                             <div class="control">
-                                <button class="button is-link">인증 메일 전송</button>
+                                <button type="submit" class="button is-link">인증 메일 전송</button>
                             </div>
                             <div class="control">
-                                <button class="button is-link is-light">취소</button>
+                                <button onclick="location.href='/'" class="button is-link is-light">취소</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+        </div>
     </div>
+  <script>
+      const form = document.querySelector('#verification_form');
+      form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const formData = new FormData(form);
+          const response = await fetch(form.action, {
+              method: form.method,
+              body: formData
+          });
+          const result = response.status;
+            if (result === 200) {
+                alert('인증 메일이 전송되었습니다.');
+                // location.href = '/';
+            } else {
+                alert('인증 메일 전송에 실패했습니다.');
+            }
+      });
+  </script>
 </body>
 </html>
