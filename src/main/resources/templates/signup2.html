@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js" integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
   <div th:replace="~{fragment/navbar :: navbarFragment}"></div>
@@ -12,7 +13,7 @@
             <div class="tile is-parent is-vertical">
                 <div class="tile is-child box">
                     <h1 class="title">회원가입</h1>
-                    <form action="/signup" method="post">
+                    <form id="signup_form" action="/api/signup" method="post"> <!-- /api/signup 구현 및 permit all 필요. Student Verification key 추가 및 검사 -->
                         <div class="field">
                             <label class="label">학교 이메일</label>
                             <div class="control">
@@ -28,18 +29,18 @@
                         <div class="field">
                             <label class="label">비밀번호</label>
                             <div class="control">
-                                <input class="input" type="password" name="password">
+                                <input id="password" class="input" type="password" name="password">
                             </div>
                         </div>
                         <div class="field">
                             <label class="label">비밀번호 확인</label>
                             <div class="control">
-                                <input class="input" type="password" name="password2">
+                                <input id="password_check" class="input" type="password">
                             </div>
                         </div>
                         <div class="field is-grouped">
                             <div class="control">
-                                <button class="button is-link">회원가입</button>
+                                <button type="submit" class="button is-link">회원가입</button>
                             </div>
                             <div class="control">
                                 <button class="button is-link is-light">취소</button>
@@ -50,5 +51,40 @@
             </div>
         </div>
     </div>
+  <script>
+      const form = document.querySelector('#signup_form');
+      form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+            const formData = new FormData(form);
+            const password_input = document.querySelector('#password');
+            const password_check_input = document.querySelector('#password_check');
+            if (password_input.value !== password_check_input.value) {
+                password_input.className = 'input is-danger';
+                password_check_input.className = 'input is-danger';
+                return;
+            } else {
+                password_input.className = 'input';
+                password_check_input.className = 'input';
+            }
+            const email = formData.get('email');
+            const username = formData.get('username');
+            const password = window.CryptoJS.SHA256(formData.get('password')).toString();
+            formData.set('email', new URLSearchParams(location.search).get('email'));
+            formData.set('username', username);
+            formData.set('password', password);
+            formData.set('userId', new URLSearchParams(location.search).get('key'));
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData
+            });
+            const result = response.status;
+            if (result === 200) {
+                alert('회원가입 성공');
+                location.href = '/';
+            } else {
+                alert('회원가입 실패');
+            }
+      });
+  </script>
 </body>
 </html>
