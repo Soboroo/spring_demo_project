@@ -21,11 +21,7 @@ public class MemberEntity {
     private String email;
     private String username;
     private String password;
-
-    @ElementCollection
-    @CollectionTable(name="roles",joinColumns=@JoinColumn(name="user_pk"))
-    @Column(name="role")
-    private List<String> hasRole = new ArrayList<>(); // 가지고 있는 권한 정보
+    private String role = "Member"; // 가지고 있는 권한 정보
 
     public static MemberEntity toMemberEntity(MemberDTO memberDTO) {
         MemberEntity memberEntity = new MemberEntity();
@@ -34,7 +30,7 @@ public class MemberEntity {
         memberEntity.setEmail(memberDTO.getEmail());
         memberEntity.setUsername(memberDTO.getUsername());
         memberEntity.setPassword(memberDTO.getPassword());
-        memberEntity.setHasRole(memberDTO.getHasRole());
+        memberEntity.setRole(memberDTO.getRole());
         return memberEntity;
     }
 }

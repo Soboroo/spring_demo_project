@@ -24,16 +24,17 @@ public class VerificationController {
         return "login";
     }
 
-    @PostMapping("/api/login")
-    public ResponseEntity login(Model model, HttpServletRequest request) {
-        System.out.printf("email: %s, password: %s", request.getParameter("email"), request.getParameter("password"));
-        return ResponseEntity.ok().build();
-    }
+//    @PostMapping("/api/login")
+//    public ResponseEntity login(Model model, HttpServletRequest request) {
+//        System.out.printf("email: %s, password: %s", request.getParameter("email"), request.getParameter("password"));
+//        return ResponseEntity.ok().build();
+//    }
 
     @PostMapping("/api/signup")
     public ResponseEntity signup(@ModelAttribute MemberDTO member) {
         if (studentVerificationService.verification(member.getEmail(), member.getUserId())) {
             memberService.join(member);
+            studentVerificationService.delete(member.getEmail());
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.badRequest().build();

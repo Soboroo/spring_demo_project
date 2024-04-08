@@ -20,8 +20,7 @@ public class MemberDTO {
     private String email;
     private String username;
     private String password;
-
-    private List<String> hasRole = new ArrayList<>();
+    private String Role = "Member";
 
     public static MemberDTO toMemberDTO(MemberEntity memberEntity) {
         MemberDTO memberDTO = new MemberDTO();
@@ -30,7 +29,7 @@ public class MemberDTO {
         memberDTO.setEmail(memberEntity.getEmail());
         memberDTO.setUsername(memberEntity.getUsername());
         memberDTO.setPassword(memberEntity.getPassword());
-        memberDTO.setHasRole(memberEntity.getHasRole());
+        memberDTO.setRole(memberEntity.getRole());
         return memberDTO;
     }
 }

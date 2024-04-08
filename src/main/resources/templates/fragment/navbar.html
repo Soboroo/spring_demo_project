@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<nav th:fragment="navbarFragment" class="navbar" role="navigation" aria-label="main navigation">
+<nav th:fragment="navbarFragment(username)" class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
             <svg width="640" height="160" viewBox="0 0 640 160" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,13 +56,22 @@
         </div>
 
         <div class="navbar-end">
-            <div class="navbar-item">
+            <div th:if="${#strings.isEmpty(username)}" class="navbar-item">
                 <div class="buttons">
                     <a href="/signup" class="button is-primary">
                         <strong>Sign up</strong>
                     </a>
                     <a href="/login" class="button is-light">
                         Log in
+                    </a>
+                </div>
+            </div>
+            <div th:if="${not #strings.isEmpty(username)}" class="navbar-item has-dropdown is-hoverable">
+                <a th:text="${username}" class="navbar-link"></a>
+
+                <div class="navbar-dropdown">
+                    <a href="/logout" class="navbar-item">
+                        Logout
                     </a>
                 </div>
             </div>
