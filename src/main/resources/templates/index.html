@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
 </head>
 <body>
-  <div th:replace="~{fragment/navbar :: navbarFragment}"></div>
+  <div th:replace="~{fragment/navbar :: navbarFragment(${sessionUsername})}"></div>
     <div class="container">
         <h1 class="title">안녕하세요. 오늘은 어떤 제품을 발견해볼까요?</h1>
         <br />
@@ -47,6 +47,7 @@
                 </div>
             </div>
         </nav>
+        <div th:if="${not #strings.isEmpty(sessionUsername)}" id="my-item">
         <h1 class="title is-4">내가 등록한 상품</h1>
         <div class="columns">
             <div class="column">
@@ -58,6 +59,7 @@
             <div class="column">
                 <div th:replace="~{fragment/demoCard :: demoCardFragment}"></div>
             </div>
+        </div>
         </div>
     </div>
 </body>

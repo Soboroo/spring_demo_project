@@ -1,6 +1,5 @@
 package com.hello.demo.configurer;
 
-import com.hello.demo.service.MemberDetailService;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -4,16 +4,12 @@ import com.hello.demo.dto.StoreItemDTO;
 import com.hello.demo.service.MemberService;
 import com.hello.demo.service.StoreItemService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Member;
 import java.util.List;
 
 @Controller
@@ -26,14 +22,19 @@ public class DemoController {
     public String index(@AuthenticationPrincipal User user, Model model) {
         if (user != null) { //if user is logged in
             System.out.println(user.getUsername());
-            model.addAttribute("username", user.getUsername());
+            model.addAttribute("sessionUsername", user.getUsername());
         }
 
         return "index";
     }
 
     @GetMapping("/items")
-    public String items(Model model, @RequestParam(value="page", defaultValue="1") int page) {
+    public String items(@AuthenticationPrincipal User user, Model model, @RequestParam(value="page", defaultValue="1") int page) {
+        if (user != null) { //if user is logged in
+            System.out.println(user.getUsername());
+            model.addAttribute("sessionUsername", user.getUsername());
+        }
+
         List<StoreItemDTO> storeItemEntities = storeItemService.getRecentItems();
         model.addAttribute("items", storeItemEntities);
         model.addAttribute("page", page);
@@ -41,7 +42,12 @@ public class DemoController {
     }
 
     @GetMapping("/item")
-    public String item(Model model, @RequestParam(value="id") String id){
+    public String item(@AuthenticationPrincipal User user, Model model, @RequestParam(value="id") String id){
+        if (user != null) { //if user is logged in
+            System.out.println(user.getUsername());
+            model.addAttribute("sessionUsername", user.getUsername());
+        }
+
         model.addAttribute("title", "iPhone 15 Pro Max 256GB");
         model.addAttribute("username", "Yeongyun Woo");
         model.addAttribute("price", "1,500,000");
@@ -50,12 +56,22 @@ public class DemoController {
     }
 
     @GetMapping("/item/create")
-    public String itemCreate() {
+    public String itemCreate(@AuthenticationPrincipal User user, Model model) {
+        if (user != null) { //if user is logged in
+            System.out.println(user.getUsername());
+            model.addAttribute("sessionUsername", user.getUsername());
+        }
+
         return "createItem";
     }
 
     @GetMapping("/error")
-    public String error() {
+    public String error(@AuthenticationPrincipal User user, Model model) {
+        if (user != null) { //if user is logged in
+            System.out.println(user.getUsername());
+            model.addAttribute("sessionUsername", user.getUsername());
+        }
+
         return "error";
     }
 }
