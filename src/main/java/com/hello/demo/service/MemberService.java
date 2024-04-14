@@ -21,7 +21,8 @@ public class MemberService {
         memberRepository.save(memberEntity);
     }
 
-    public Optional<MemberEntity> findByEmail(String email) {
-        return memberRepository.findByEmail(email);
+    public Optional<MemberDTO> findByEmail(String email) {
+        Optional<MemberEntity> find = memberRepository.findByEmail(email);
+        return find.map(MemberDTO::toMemberDTO);
     }
 }

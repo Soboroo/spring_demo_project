@@ -1,5 +1,6 @@
 package com.hello.demo.service;
 
+import com.hello.demo.dto.MemberDTO;
 import com.hello.demo.dto.StoreItemDTO;
 import com.hello.demo.entity.StoreItemEntity;
 import com.hello.demo.repository.StoreItemRepository;
@@ -18,8 +19,13 @@ public class StoreItemService {
         List<StoreItemDTO> storeItemDTOList = new ArrayList<>();
         List<StoreItemEntity> storeItemEntityList = storeItemRepository.findTop8ByOrderByCreatedAtDesc();
         for (StoreItemEntity storeItemEntity : storeItemEntityList) {
-            storeItemDTOList.add(StoreItemDTO.toStoreItemDTO(storeItemEntity));
+            storeItemDTOList.add(StoreItemDTO.toStoreItemDTO(storeItemEntity, MemberDTO.toMemberDTO(storeItemEntity.getMemberEntity())));
         }
         return storeItemDTOList;
+    }
+
+    public void createItem(StoreItemDTO storeItemDTO) {
+        StoreItemEntity storeItemEntity = StoreItemEntity.toStoreItemEntity(storeItemDTO);
+        storeItemRepository.save(storeItemEntity);
     }
 }

@@ -28,125 +28,58 @@
                 </div>
             </div>
             <div class="tile is-parent">
+                <form id="create_form" action="/api/item/create" method="post">
                 <div class="tile is-child box">
                     <div class="field">
                         <label class="label">상품명</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="상온 초전도체 팝니다.">
+                            <input name="title" class="input" type="text" placeholder="상온 초전도체 팝니다.">
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">판매 가격</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="2,000,000,000">
+                            <input name="price" class="input" type="text" placeholder="2,000,000,000">
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">상품 설명</label>
                         <div class="control">
-                            <textarea class="textarea" placeholder="고양이 레이저 포인터 대신으로 가지고 놀아주다가 집안이 박살이 나서 급처합니다."></textarea>
+                            <textarea name="description" class="textarea" placeholder="고양이 레이저 포인터 대신으로 가지고 놀아주다가 집안이 박살이 나서 급처합니다."></textarea>
                         </div>
                     </div>
 
                     <div class="field is-grouped">
                         <div class="control">
-                            <button class="button is-link">판매 개시</button>
+                            <button type="submit" class="button is-link">판매 개시</button>
                         </div>
                         <div class="control">
-                            <button class="button is-link is-light">취소</button>
+                            <button onclick="location.href='/'" class="button is-link is-light">취소</button>
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
-        <!-- <div id="media-content">
-            <article class="media">
-                <figure class="media-left">
-                    <p class="image is-64x64">
-                        <img src="https://bulma.io/images/placeholders/128x128.png">
-                    </p>
-                </figure>
-                <div class="media-content">
-                    <div class="content">
-                        <p>
-                            <strong>Barbara Middleton</strong>
-                            <br>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
-                            <br>
-                            <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
-                        </p>
-                    </div>
-
-                    <article class="media">
-                        <figure class="media-left">
-                            <p class="image is-48x48">
-                                <img src="https://bulma.io/images/placeholders/96x96.png">
-                            </p>
-                        </figure>
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <strong>Sean Brown</strong>
-                                    <br>
-                                    Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
-                                    <br>
-                                    <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
-                                </p>
-                            </div>
-
-                            <article class="media">
-                                Vivamus quis semper metus, non tincidunt dolor. Vivamus in mi eu lorem cursus ullamcorper sit amet nec massa.
-                            </article>
-
-                            <article class="media">
-                                Morbi vitae diam et purus tincidunt porttitor vel vitae augue. Praesent malesuada metus sed pharetra euismod. Cras tellus odio, tincidunt iaculis diam non, porta aliquet tortor.
-                            </article>
-                        </div>
-                    </article>
-
-                    <article class="media">
-                        <figure class="media-left">
-                            <p class="image is-48x48">
-                                <img src="https://bulma.io/images/placeholders/96x96.png">
-                            </p>
-                        </figure>
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <strong>Kayli Eunice </strong>
-                                    <br>
-                                    Sed convallis scelerisque mauris, non pulvinar nunc mattis vel. Maecenas varius felis sit amet magna vestibulum euismod malesuada cursus libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus lacinia non nisl id feugiat.
-                                    <br>
-                                    <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </article>
-
-            <article class="media">
-                <figure class="media-left">
-                    <p class="image is-64x64">
-                        <img src="https://bulma.io/images/placeholders/128x128.png">
-                    </p>
-                </figure>
-                <div class="media-content">
-                    <div class="field">
-                        <p class="control">
-                            <textarea class="textarea" placeholder="Add a comment..."></textarea>
-                        </p>
-                    </div>
-                    <div class="field">
-                        <p class="control">
-                            <button class="button">Post comment</button>
-                        </p>
-                    </div>
-                </div>
-            </article>
-        </div> -->
     </div>
+    <script>
+        const form = document.querySelector('#create_form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData
+            });
+            const result = response.status;
+            if (result === 200) {
+                location.href = '/';
+            } else {
+                alert('상품 등록 실패');
+            }
+        });
+    </script>
 </body>
 </html>

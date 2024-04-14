@@ -26,7 +26,9 @@ public class StoreItemDTO {
     private Date updatedAt;
     private Date deletedAt;
 
-    public static StoreItemDTO toStoreItemDTO(StoreItemEntity storeItemEntity) {
+    private MemberDTO memberDTO;
+
+    public static StoreItemDTO toStoreItemDTO(StoreItemEntity storeItemEntity, MemberDTO memberDTO) {
         StoreItemDTO storeItemDTO = new StoreItemDTO();
         storeItemDTO.setPk(storeItemEntity.getPk());
         storeItemDTO.setItemId(storeItemEntity.getItemId());
@@ -39,6 +41,7 @@ public class StoreItemDTO {
         storeItemDTO.setCreatedAt(storeItemEntity.getCreatedAt());
         storeItemDTO.setUpdatedAt(storeItemEntity.getUpdatedAt());
         storeItemDTO.setDeletedAt(storeItemEntity.getDeletedAt());
+        storeItemDTO.setMemberDTO(memberDTO);
         return storeItemDTO;
     }
 }
