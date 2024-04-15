@@ -36,7 +36,7 @@ public class MemberEntity {
         memberEntity.setPassword(memberDTO.getPassword());
         memberEntity.setRole(memberDTO.getRole());
         if (memberDTO.getStoreItemDTOList() != null && !memberDTO.getStoreItemDTOList().isEmpty())
-        memberEntity.setStoreItemEntities(memberDTO.getStoreItemDTOList().stream().map(StoreItemEntity::toStoreItemEntity).toList());
+        memberEntity.setStoreItemEntities(memberDTO.getStoreItemDTOList().stream().map((x) -> StoreItemEntity.toStoreItemEntity(x, memberEntity)).toList());
         return memberEntity;
     }
 }

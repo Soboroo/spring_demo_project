@@ -36,7 +36,7 @@ public class StoreItemEntity {
     @JoinColumn(name = "user_id")
     private MemberEntity memberEntity;
 
-    public static StoreItemEntity toStoreItemEntity(StoreItemDTO storeItemDTO) {
+    public static StoreItemEntity toStoreItemEntity(StoreItemDTO storeItemDTO, MemberEntity memberEntity) {
         StoreItemEntity storeItemEntity = new StoreItemEntity();
         storeItemEntity.setPk(storeItemDTO.getPk());
         storeItemEntity.setItemId(storeItemDTO.getItemId());
@@ -49,7 +49,7 @@ public class StoreItemEntity {
         storeItemEntity.setCreatedAt(storeItemDTO.getCreatedAt());
         storeItemEntity.setUpdatedAt(storeItemDTO.getUpdatedAt());
         storeItemEntity.setDeletedAt(storeItemDTO.getDeletedAt());
-        storeItemEntity.setMemberEntity(MemberEntity.toMemberEntity(storeItemDTO.getMemberDTO()));
+        storeItemEntity.setMemberEntity(memberEntity);
         return storeItemEntity;
     }
 }

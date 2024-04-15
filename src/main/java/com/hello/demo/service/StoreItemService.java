@@ -2,6 +2,7 @@ package com.hello.demo.service;
 
 import com.hello.demo.dto.MemberDTO;
 import com.hello.demo.dto.StoreItemDTO;
+import com.hello.demo.entity.MemberEntity;
 import com.hello.demo.entity.StoreItemEntity;
 import com.hello.demo.repository.StoreItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class StoreItemService {
     }
 
     public void createItem(StoreItemDTO storeItemDTO) {
-        StoreItemEntity storeItemEntity = StoreItemEntity.toStoreItemEntity(storeItemDTO);
+        StoreItemEntity storeItemEntity = StoreItemEntity.toStoreItemEntity(storeItemDTO, MemberEntity.toMemberEntity(storeItemDTO.getMemberDTO()));
         storeItemRepository.save(storeItemEntity);
     }
 

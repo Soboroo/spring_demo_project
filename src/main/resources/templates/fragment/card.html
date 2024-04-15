@@ -24,11 +24,8 @@
             </div>
         </div>
 
-        <div th:text="*{getDescription()}" class="content">
-            오홍홍 좋아요!
-            <br>
-            <time th:text="*{getCreatedAt}" datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-        </div>
+        <div th:text="*{getDescription()}" class="content"></div>
+        <time th:text="*{getCreatedAt()}" datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
     </div>
 </div>
 </body>
