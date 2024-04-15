@@ -29,22 +29,25 @@ public class StoreItemController {
             model.addAttribute("sessionUsername", user.getUsername());
         }
 
-        List<StoreItemDTO> storeItemEntities = storeItemService.getRecentItems();
-        model.addAttribute("items", storeItemEntities);
+        List<StoreItemDTO> storeItems = storeItemService.getRecentItems();
+        model.addAttribute("items", storeItems);
         model.addAttribute("page", page);
         return "items";
     }
 
     @GetMapping("/item")
-    public String item(@AuthenticationPrincipal User user, Model model, @RequestParam(value="id") String id){
+    public String item(@AuthenticationPrincipal User user, Model model, @RequestParam(value="itemId") String itemId){
         if (user != null) {
             model.addAttribute("sessionUsername", user.getUsername());
         }
 
-        model.addAttribute("title", "iPhone 15 Pro Max 256GB");
-        model.addAttribute("username", "Yeongyun Woo");
-        model.addAttribute("price", "1,500,000");
-        model.addAttribute("description", "갤럭시 쓰다가 처음으로 아이폰 샀는데 적응이 안돼서 팝니다. 1달정도 사용했고, 사용감 거의 없습니다.");
+//        model.addAttribute("title", "iPhone 15 Pro Max 256GB");
+//        model.addAttribute("username", "Yeongyun Woo");
+//        model.addAttribute("price", "1,500,000");
+//        model.addAttribute("description", "갤럭시 쓰다가 처음으로 아이폰 샀는데 적응이 안돼서 팝니다. 1달정도 사용했고, 사용감 거의 없습니다.");
+
+        StoreItemDTO storeItemDTO = storeItemService.findByItemId(itemId);
+        model.addAttribute("item", storeItemDTO);
         return "item";
     }
 

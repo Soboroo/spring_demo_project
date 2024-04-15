@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +28,14 @@ public class StoreItemService {
     public void createItem(StoreItemDTO storeItemDTO) {
         StoreItemEntity storeItemEntity = StoreItemEntity.toStoreItemEntity(storeItemDTO);
         storeItemRepository.save(storeItemEntity);
+    }
+
+    public StoreItemDTO findByItemId(String itemId) {
+        Optional<StoreItemEntity> storeItemEntity = storeItemRepository.findByItemId(itemId);
+        if (storeItemEntity.isPresent()) {
+            return StoreItemDTO.toStoreItemDTO(storeItemEntity.get(), MemberDTO.toMemberDTO(storeItemEntity.get().getMemberEntity()));
+        } else {
+            throw new IllegalArgumentException("Item not found");
+        }
     }
 }
