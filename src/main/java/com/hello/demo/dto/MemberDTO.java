@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "storeItemDTOList")
 public class MemberDTO {
     private Long pk;
     private String userId;

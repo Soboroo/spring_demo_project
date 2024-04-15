@@ -22,7 +22,7 @@ public class StoreItemDTO {
     private int price;
     private boolean isAvailable;
     private boolean isDeleted;
-    private Date createdAt;
+    private Date createdAt = new Date();
     private Date updatedAt;
     private Date deletedAt;
 

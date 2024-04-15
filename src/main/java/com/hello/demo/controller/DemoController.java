@@ -1,8 +1,11 @@
 package com.hello.demo.controller;
 
+import com.hello.demo.dto.MemberDTO;
 import com.hello.demo.dto.StoreItemDTO;
+import com.hello.demo.entity.MemberEntity;
 import com.hello.demo.service.MemberService;
 import com.hello.demo.service.StoreItemService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -11,14 +14,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class DemoController {
+    private final MemberService memberService;
+
     @GetMapping("/")
+    @Transactional
     public String index(@AuthenticationPrincipal User user, Model model) {
         if (user != null) {
             model.addAttribute("sessionUsername", user.getUsername());
+            Optional<MemberDTO> member = memberService.findByEmail(user.getUsername());
+            if (member.isPresent()) {
+                List<StoreItemDTO> storeItemDTOList = member.get().getStoreItemDTOList();
+                model.addAttribute("myItem", storeItemDTOList.subList(0, Math.min(storeItemDTOList.size(), 3)));
+            }
         }
 
         return "index";

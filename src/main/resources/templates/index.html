@@ -50,14 +50,8 @@
         <div th:if="${not #strings.isEmpty(sessionUsername)}" id="my-item">
         <h1 class="title is-4">내가 등록한 상품</h1>
         <div class="columns">
-            <div class="column">
-                <div th:replace="~{fragment/demoCard :: demoCardFragment}"></div>
-            </div>
-            <div class="column">
-                <div th:replace="~{fragment/demoCard :: demoCardFragment}"></div>
-            </div>
-            <div class="column">
-                <div th:replace="~{fragment/demoCard :: demoCardFragment}"></div>
+            <div th:each="item : ${myItem}" class="column">
+                <div th:replace="~{fragment/card :: cardFragment(${item})}"></div>
             </div>
         </div>
         </div>
