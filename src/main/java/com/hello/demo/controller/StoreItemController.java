@@ -29,7 +29,7 @@ public class StoreItemController {
             model.addAttribute("sessionUsername", user.getUsername());
         }
 
-        List<StoreItemDTO> storeItems = storeItemService.getRecentItems();
+        List<StoreItemDTO> storeItems = storeItemService.getAllItems(page);
         model.addAttribute("items", storeItems);
         model.addAttribute("page", page);
         return "items";
@@ -39,12 +39,8 @@ public class StoreItemController {
     public String item(@AuthenticationPrincipal User user, Model model, @RequestParam(value="itemId") String itemId){
         if (user != null) {
             model.addAttribute("sessionUsername", user.getUsername());
+            model.addAttribute("isMyItem", memberService.isMyItem(memberService.findByEmail(user.getUsername()).get(), itemId));
         }
-
-//        model.addAttribute("title", "iPhone 15 Pro Max 256GB");
-//        model.addAttribute("username", "Yeongyun Woo");
-//        model.addAttribute("price", "1,500,000");
-//        model.addAttribute("description", "갤럭시 쓰다가 처음으로 아이폰 샀는데 적응이 안돼서 팝니다. 1달정도 사용했고, 사용감 거의 없습니다.");
 
         StoreItemDTO storeItemDTO = storeItemService.findByItemId(itemId);
         model.addAttribute("item", storeItemDTO);

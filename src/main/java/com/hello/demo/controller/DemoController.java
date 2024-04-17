@@ -20,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DemoController {
     private final MemberService memberService;
+    private final StoreItemService storeItemService;
 
     @GetMapping("/")
     @Transactional
@@ -29,9 +30,12 @@ public class DemoController {
             Optional<MemberDTO> member = memberService.findByEmail(user.getUsername());
             if (member.isPresent()) {
                 List<StoreItemDTO> storeItemDTOList = member.get().getStoreItemDTOList();
-                model.addAttribute("myItem", storeItemDTOList.subList(0, Math.min(storeItemDTOList.size(), 3)));
+                storeItemDTOList = storeItemDTOList.subList(0, Math.min(storeItemDTOList.size(), 3));
+                model.addAttribute("myItem", storeItemDTOList);
             }
         }
+        List<StoreItemDTO> storeItemDTOList = storeItemService.getRecentItems();
+        model.addAttribute("recentItems", storeItemDTOList);
 
         return "index";
     }

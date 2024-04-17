@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<div th:fragment="cardFragment(item)" th:object="${item}" th:onclick="|location.href='@{/item(itemId=*{getItemId})}'|" class="card">
+<div th:fragment="cardFragment(item)" th:object="${item}" th:onclick="|location.href='@{/item(itemId=*{getItemId()})}'|" class="card">
     <div class="card-image">
         <figure class="image is-4by3">
             <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder image">
@@ -19,13 +19,13 @@
                 </figure>
             </div>
             <div class="media-content">
-                <p th:text="|*{getTitle()}|" class="subtitle is-6">iPhone 15 Pro Max Ultra General King Saesong Samdo-Sugoon-Tongjaesa 516PB</p>
-                <p th:text="|*{getPrice()}원|" class="title is-4">999,999원</p>
+                <p th:text="|*{getTitle()}|" class="subtitle is-6"></p>
+                <p th:text="|*{getPrice()}원|" class="title is-4"></p>
             </div>
         </div>
 
         <div th:text="*{getDescription()}" class="content"></div>
-        <time th:text="*{getCreatedAt()}" datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+        <time th:text="*{getCreatedAt()}" datetime="2016-1-1"></time>
     </div>
 </div>
 </body>

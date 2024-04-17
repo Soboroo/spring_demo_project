@@ -6,6 +6,9 @@ import com.hello.demo.entity.MemberEntity;
 import com.hello.demo.entity.StoreItemEntity;
 import com.hello.demo.repository.StoreItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,10 +22,16 @@ public class StoreItemService {
 
     public List<StoreItemDTO> getRecentItems() {
         List<StoreItemDTO> storeItemDTOList = new ArrayList<>();
-        List<StoreItemEntity> storeItemEntityList = storeItemRepository.findTop8ByOrderByCreatedAtDesc();
+        List<StoreItemEntity> storeItemEntityList = storeItemRepository.findTop4ByOrderByCreatedAtDesc();
         for (StoreItemEntity storeItemEntity : storeItemEntityList) {
             storeItemDTOList.add(StoreItemDTO.toStoreItemDTO(storeItemEntity, MemberDTO.toMemberDTO(storeItemEntity.getMemberEntity())));
         }
+        return storeItemDTOList;
+    }
+
+    public List<StoreItemDTO> getAllItems(int page) {
+        Pageable pageable = PageRequest.of(page - 1, 8, Sort.by("createdAt").descending());
+        List<StoreItemDTO> storeItemDTOList = storeItemRepository.findAll(pageable).stream().map((x) -> StoreItemDTO.toStoreItemDTO(x, MemberDTO.toMemberDTO(x.getMemberEntity()))).toList();
         return storeItemDTOList;
     }
 

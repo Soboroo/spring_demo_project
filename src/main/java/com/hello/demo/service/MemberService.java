@@ -21,6 +21,15 @@ public class MemberService {
         memberRepository.save(memberEntity);
     }
 
+    public boolean isMyItem(MemberDTO member, String itemId) {
+        Optional<MemberEntity> find = memberRepository.findByEmail(member.getEmail());
+        if (find.isEmpty()) {
+            return false;
+        }
+        MemberEntity memberEntity = find.get();
+        return memberEntity.getStoreItemEntities().stream().anyMatch(x -> x.getItemId().equals(itemId));
+    }
+
     public Optional<MemberDTO> findByEmail(String email) {
         Optional<MemberEntity> find = memberRepository.findByEmail(email);
         return find.map(MemberDTO::toMemberDTO);

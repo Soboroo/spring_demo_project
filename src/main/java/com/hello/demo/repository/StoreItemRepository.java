@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StoreItemRepository extends JpaRepository<StoreItemEntity, Long>{
-    List<StoreItemEntity> findTop8ByOrderByCreatedAtDesc();
+    List<StoreItemEntity> findTop4ByOrderByCreatedAtDesc();
     Optional<StoreItemEntity> findByItemId(String itemId);
     Optional<StoreItemEntity> findByTitle(String title);
     List<StoreItemEntity> findByMemberEntity(MemberEntity memberEntity);

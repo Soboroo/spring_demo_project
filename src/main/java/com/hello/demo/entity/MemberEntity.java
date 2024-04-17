@@ -25,6 +25,7 @@ public class MemberEntity {
     private String role = "Member"; // 가지고 있는 권한 정보
 
     @OneToMany(mappedBy = "memberEntity")
+    @OrderBy("createdAt DESC")
     private List<StoreItemEntity> storeItemEntities = new ArrayList<>();
 
     public static MemberEntity toMemberEntity(MemberDTO memberDTO) {
