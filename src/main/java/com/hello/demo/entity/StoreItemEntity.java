@@ -19,7 +19,6 @@ public class StoreItemEntity {
 
     private String itemId = UUID.randomUUID().toString();
     private String title;
-    private String userId;
     private String description;
     private String imageUrl;
     private int price;
@@ -33,7 +32,11 @@ public class StoreItemEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date deletedAt;
 
-    public static StoreItemEntity toStoreItemEntity(StoreItemDTO storeItemDTO) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private MemberEntity memberEntity;
+
+    public static StoreItemEntity toStoreItemEntity(StoreItemDTO storeItemDTO, MemberEntity memberEntity) {
         StoreItemEntity storeItemEntity = new StoreItemEntity();
         storeItemEntity.setPk(storeItemDTO.getPk());
         storeItemEntity.setItemId(storeItemDTO.getItemId());
@@ -46,6 +49,7 @@ public class StoreItemEntity {
         storeItemEntity.setCreatedAt(storeItemDTO.getCreatedAt());
         storeItemEntity.setUpdatedAt(storeItemDTO.getUpdatedAt());
         storeItemEntity.setDeletedAt(storeItemDTO.getDeletedAt());
+        storeItemEntity.setMemberEntity(memberEntity);
         return storeItemEntity;
     }
 }

@@ -6,10 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "storeItemDTOList")
 public class MemberDTO {
     private Long pk;
     private String userId;
@@ -17,6 +20,8 @@ public class MemberDTO {
     private String username;
     private String password;
     private String Role = "Member";
+
+    private List<StoreItemDTO> storeItemDTOList = new ArrayList<>();
 
     public static MemberDTO toMemberDTO(MemberEntity memberEntity) {
         MemberDTO memberDTO = new MemberDTO();
@@ -26,6 +31,8 @@ public class MemberDTO {
         memberDTO.setUsername(memberEntity.getUsername());
         memberDTO.setPassword(memberEntity.getPassword());
         memberDTO.setRole(memberEntity.getRole());
+        if (memberEntity.getStoreItemEntities() != null && !memberEntity.getStoreItemEntities().isEmpty())
+        memberDTO.setStoreItemDTOList(memberEntity.getStoreItemEntities().stream().map((x) -> StoreItemDTO.toStoreItemDTO(x, memberDTO)).toList());
         return memberDTO;
     }
 }

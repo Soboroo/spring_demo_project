@@ -10,15 +10,9 @@
     <div class="container">
         <h1 class="title">안녕하세요. 오늘은 어떤 제품을 발견해볼까요?</h1>
         <br />
-        <div class="columns">
-            <div class="column">
-                <div th:replace="~{fragment/demoCard :: demoCardFragment}"></div>
-            </div>
-            <div class="column">
-                <div th:replace="~{fragment/demoCard :: demoCardFragment}"></div>
-            </div>
-            <div class="column">
-                <div th:replace="~{fragment/demoCard :: demoCardFragment}"></div>
+        <div class="columns is-multiline">
+            <div th:each="item : ${recentItems}" class="column is-one-quarter">
+                <div class="cell" th:replace="~{fragment/card :: cardFragment(${item})}"></div>
             </div>
         </div>
         <nav class="level">
@@ -49,15 +43,9 @@
         </nav>
         <div th:if="${not #strings.isEmpty(sessionUsername)}" id="my-item">
         <h1 class="title is-4">내가 등록한 상품</h1>
-        <div class="columns">
-            <div class="column">
-                <div th:replace="~{fragment/demoCard :: demoCardFragment}"></div>
-            </div>
-            <div class="column">
-                <div th:replace="~{fragment/demoCard :: demoCardFragment}"></div>
-            </div>
-            <div class="column">
-                <div th:replace="~{fragment/demoCard :: demoCardFragment}"></div>
+        <div class="columns is-multiline">
+            <div th:each="item : ${myItem}" class="column is-one-quarter">
+                <div th:replace="~{fragment/card :: cardFragment(${item})}"></div>
             </div>
         </div>
         </div>

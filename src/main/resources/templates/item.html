@@ -16,14 +16,18 @@
                     </figure>
                 </div>
             </div>
-            <div class="column">
+            <div th:object="${item}" class="column">
                 <div class="card is-child box">
-                    <h1 class="title" th:text="${title}">Title</h1>
-                    <h1 class="sub-title is-4" th:text="${username}">Username</h1>
-                    <h1 class="title" th:text="${price}">Price</h1>
-                    <h1 class="sub-title is-4" th:text="${description}">Description</h1>
+                    <h1 class="title" th:text="*{getTitle()}">Title</h1>
+                    <h1 class="sub-title is-4" th:text="*{getMemberDTO().getUsername()}">Username</h1>
+                    <h1 class="title" th:text="|*{getPrice()}원|">Price</h1>
+                    <h1 class="sub-title is-4" th:text="*{getCreatedAt()}">Created At</h1>
+                    <h1 class="sub-title is-4" th:text="*{getDescription()}">Description</h1>
                     <div>
-                    <button class="button is-primary is-outlined">판매자와 체팅</button>
+                        <button class="button is-primary is-outlined">판매자와 체팅</button>
+                    </div>
+                    <div th:if="${isMyItem}">
+                        <button class="button is-primary is-outlined">수정</button>
                     </div>
                 </div>
             </div>

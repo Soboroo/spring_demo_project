@@ -4,15 +4,16 @@ import com.hello.demo.dto.MemberDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "users")
+@ToString
 public class MemberEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,10 @@ public class MemberEntity {
     private String password;
     private String role = "Member"; // 가지고 있는 권한 정보
 
+    @OneToMany(mappedBy = "memberEntity")
+    @OrderBy("createdAt DESC")
+    private List<StoreItemEntity> storeItemEntities = new ArrayList<>();
+
     public static MemberEntity toMemberEntity(MemberDTO memberDTO) {
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setPk(memberDTO.getPk());
@@ -31,6 +36,8 @@ public class MemberEntity {
         memberEntity.setUsername(memberDTO.getUsername());
         memberEntity.setPassword(memberDTO.getPassword());
         memberEntity.setRole(memberDTO.getRole());
+        if (memberDTO.getStoreItemDTOList() != null && !memberDTO.getStoreItemDTOList().isEmpty())
+        memberEntity.setStoreItemEntities(memberDTO.getStoreItemDTOList().stream().map((x) -> StoreItemEntity.toStoreItemEntity(x, memberEntity)).toList());
         return memberEntity;
     }
 }
