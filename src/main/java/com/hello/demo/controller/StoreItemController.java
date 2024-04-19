@@ -56,6 +56,22 @@ public class StoreItemController {
         return "createItem";
     }
 
+    @GetMapping("/item/update")
+    public String itemUpdate(@AuthenticationPrincipal User user, Model model, @RequestParam(value="itemId") String itemId) {
+        if (user != null) {
+            model.addAttribute("sessionUsername", user.getUsername());
+            boolean isMyItem = memberService.isMyItem(memberService.findByEmail(user.getUsername()).get(), itemId);
+            if (isMyItem) {
+                StoreItemDTO storeItemDTO = storeItemService.findByItemId(itemId);
+                model.addAttribute("item", storeItemDTO);
+            } else {
+                return "redirect:/error";
+            }
+        }
+
+        return "updateItem";
+    }
+
     @PostMapping("/api/item/create")
     public ResponseEntity itemCreate(@AuthenticationPrincipal User user, @ModelAttribute StoreItemDTO storeItemDTO) {
         if (user == null) {
@@ -68,4 +84,17 @@ public class StoreItemController {
         return ResponseEntity.ok(storeItemDTO.getItemId());
     }
 
+    @PostMapping("/api/item/update")
+    public ResponseEntity itemUpdate(@AuthenticationPrincipal User user, @ModelAttribute StoreItemDTO storeItemDTO) {
+        if (user == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (memberService.isMyItem(memberService.findByEmail(user.getUsername()).get(), storeItemDTO.getItemId())) {
+            System.out.println(storeItemDTO);
+            storeItemService.updateItem(storeItemDTO);
+            return ResponseEntity.ok(storeItemDTO.getItemId());
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,21 @@ public class StoreItemService {
     public void createItem(StoreItemDTO storeItemDTO) {
         StoreItemEntity storeItemEntity = StoreItemEntity.toStoreItemEntity(storeItemDTO, MemberEntity.toMemberEntity(storeItemDTO.getMemberDTO()));
         storeItemRepository.save(storeItemEntity);
+    }
+
+    public void updateItem(StoreItemDTO storeItemDTO) {
+        Optional<StoreItemEntity> storeItemEntity = storeItemRepository.findByItemId(storeItemDTO.getItemId());
+        if (storeItemEntity.isPresent()) {
+            if (storeItemDTO.getTitle() != null) storeItemEntity.get().setTitle(storeItemDTO.getTitle());
+            if (storeItemDTO.getDescription() != null) storeItemEntity.get().setDescription(storeItemDTO.getDescription());
+            if (storeItemDTO.getImageUrl() != null) storeItemEntity.get().setImageUrl(storeItemDTO.getImageUrl());
+            if (storeItemDTO.getPrice() != 0) storeItemEntity.get().setPrice(storeItemDTO.getPrice());
+            if (storeItemDTO.isAvailable() != storeItemEntity.get().isAvailable()) storeItemEntity.get().setAvailable(storeItemDTO.isAvailable());
+            storeItemEntity.get().setUpdatedAt(new Date());
+            storeItemRepository.save(storeItemEntity.get());
+        } else {
+            throw new IllegalArgumentException("Item not found");
+        }
     }
 
     public StoreItemDTO findByItemId(String itemId) {

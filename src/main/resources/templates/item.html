@@ -27,7 +27,7 @@
                         <button class="button is-primary is-outlined">판매자와 체팅</button>
                     </div>
                     <div th:if="${isMyItem}">
-                        <button class="button is-primary is-outlined">수정</button>
+                        <button th:onclick="|location.href='@{/item/update(itemId=*{getItemId()})}'|" class="button is-primary is-outlined">수정</button>
                     </div>
                 </div>
             </div>

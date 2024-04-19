@@ -11,50 +11,50 @@
     <div class="container">
         <div class="tile is-ancestor is-vertical">
             <div class="tile is-parent">
-                <h1 class="title">상품 등록</h1>
+                <h1 class="title">상품 정보 수정</h1>
                 <div class="tile is-child box">
                     <div class="file is-boxed">
                         <label class="file-label">
                             <input class="file-input" type="file" name="resume">
                             <span class="file-cta">
-      <span class="file-icon">
-        <i class="fas fa-upload"></i>
-      </span>
-      <span class="file-label">
-        Choose a file…
-      </span>
-    </span>
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Choose a file…
+                                </span>
+                            </span>
                         </label>
                     </div>
                 </div>
             </div>
-            <div class="tile is-parent">
-                <form id="create_form" action="/api/item/create" method="post">
+            <div th:object="${item}" class="tile is-parent">
+                <form id="update_form" action="/api/item/update" method="post">
                 <div class="tile is-child box">
                     <div class="field">
                         <label class="label">상품명</label>
                         <div class="control">
-                            <input name="title" class="input" type="text" placeholder="상온 초전도체 팝니다.">
+                            <input th:value="*{getTitle()}" name="title" class="input" type="text" placeholder="상온 초전도체 팝니다.">
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">판매 가격</label>
                         <div class="control">
-                            <input name="price" class="input" type="number" min="100" placeholder="2,000,000,000">
+                            <input th:value="*{getPrice()}" name="price" class="input" type="number" min="100" placeholder="2,000,000,000">
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">상품 설명</label>
                         <div class="control">
-                            <textarea name="description" class="textarea" placeholder="고양이 레이저 포인터 대신으로 가지고 놀아주다가 집안이 박살이 나서 급처합니다."></textarea>
+                            <textarea th:text="*{getDescription()}" name="description" class="textarea" placeholder="고양이 레이저 포인터 대신으로 가지고 놀아주다가 집안이 박살이 나서 급처합니다."></textarea>
                         </div>
                     </div>
 
                     <div class="field is-grouped">
                         <div class="control">
-                            <button type="submit" class="button is-link">판매 개시</button>
+                            <button type="submit" class="button is-link">상품 정보 수정</button>
                         </div>
                         <div class="control">
                             <button onclick="location.href='/'" class="button is-link is-light">취소</button>
@@ -66,10 +66,11 @@
         </div>
     </div>
     <script>
-        const form = document.querySelector('#create_form');
+        const form = document.querySelector('#update_form');
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = new FormData(form);
+            formData.append('itemId', new URLSearchParams(location.search).get('itemId'));
             const response = await fetch(form.action, {
                 method: form.method,
                 body: formData
