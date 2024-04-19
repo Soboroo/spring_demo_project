@@ -43,7 +43,7 @@ public class StoreItemService {
 
     public void updateItem(StoreItemDTO storeItemDTO) {
         Optional<StoreItemEntity> storeItemEntity = storeItemRepository.findByItemId(storeItemDTO.getItemId());
-        if (storeItemEntity.isPresent()) {
+        if (storeItemEntity.isPresent()) { // could be refactored
             if (storeItemDTO.getTitle() != null) storeItemEntity.get().setTitle(storeItemDTO.getTitle());
             if (storeItemDTO.getDescription() != null) storeItemEntity.get().setDescription(storeItemDTO.getDescription());
             if (storeItemDTO.getImageUrl() != null) storeItemEntity.get().setImageUrl(storeItemDTO.getImageUrl());
@@ -63,5 +63,9 @@ public class StoreItemService {
         } else {
             throw new IllegalArgumentException("Item not found");
         }
+    }
+
+    public void deleteItem(String itemId) {
+        storeItemRepository.deleteByItemId(itemId);
     }
 }

@@ -97,4 +97,17 @@ public class StoreItemController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @DeleteMapping("/api/item/delete")
+    public ResponseEntity itemDelete(@AuthenticationPrincipal User user, @RequestParam(value="itemId") String itemId) {
+        if (user == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (memberService.isMyItem(memberService.findByEmail(user.getUsername()).get(), itemId)) {
+            storeItemService.deleteItem(itemId);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

@@ -8,39 +8,14 @@
 <body>
   <div th:replace="~{fragment/navbar :: navbarFragment(${sessionUsername})}"></div>
     <div class="container">
-        <h1 class="title">안녕하세요. 오늘은 어떤 제품을 발견해볼까요?</h1>
+        <h1 th:if="${#strings.isEmpty(sessionUsername)}" class="title">안녕하세요. 오늘은 어떤 제품을 발견해볼까요?</h1>
+        <h1 th:unless="${#strings.isEmpty(sessionUsername)}" class="title" th:text="|안녕하세요 ${nickname}님, 어떤 제품을 발견해볼까요?|"></h1>
         <br />
         <div class="columns is-multiline">
             <div th:each="item : ${recentItems}" class="column is-one-quarter">
                 <div class="cell" th:replace="~{fragment/card :: cardFragment(${item})}"></div>
             </div>
         </div>
-        <nav class="level">
-            <div class="level-item has-text-centered">
-                <div>
-                    <p class="heading">월간 활성 유저</p>
-                    <p class="title">3,456</p>
-                </div>
-            </div>
-            <div class="level-item has-text-centered">
-                <div>
-                    <p class="heading">지금까지 등록된 상품</p>
-                    <p class="title">123</p>
-                </div>
-            </div>
-            <div class="level-item has-text-centered">
-                <div>
-                    <p class="heading">Followers</p>
-                    <p class="title">456K</p>
-                </div>
-            </div>
-            <div class="level-item has-text-centered">
-                <div>
-                    <p class="heading">Likes</p>
-                    <p class="title">789</p>
-                </div>
-            </div>
-        </nav>
         <div th:if="${not #strings.isEmpty(sessionUsername)}" id="my-item">
         <h1 class="title is-4">내가 등록한 상품</h1>
         <div class="columns is-multiline">

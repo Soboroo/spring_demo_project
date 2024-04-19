@@ -21,10 +21,8 @@ public class StoreItemDTO {
     private String imageUrl;
     private int price;
     private boolean isAvailable;
-    private boolean isDeleted;
     private Date createdAt = new Date();
     private Date updatedAt;
-    private Date deletedAt;
 
     private MemberDTO memberDTO;
 
@@ -37,10 +35,8 @@ public class StoreItemDTO {
         storeItemDTO.setImageUrl(storeItemEntity.getImageUrl());
         storeItemDTO.setPrice(storeItemEntity.getPrice());
         storeItemDTO.setAvailable(storeItemEntity.isAvailable());
-        storeItemDTO.setDeleted(storeItemEntity.isDeleted());
         storeItemDTO.setCreatedAt(storeItemEntity.getCreatedAt());
         storeItemDTO.setUpdatedAt(storeItemEntity.getUpdatedAt());
-        storeItemDTO.setDeletedAt(storeItemEntity.getDeletedAt());
         storeItemDTO.setMemberDTO(memberDTO);
         return storeItemDTO;
     }

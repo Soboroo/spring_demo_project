@@ -26,12 +26,13 @@ public class DemoController {
     @Transactional
     public String index(@AuthenticationPrincipal User user, Model model) {
         if (user != null) {
-            model.addAttribute("sessionUsername", user.getUsername());
             Optional<MemberDTO> member = memberService.findByEmail(user.getUsername());
             if (member.isPresent()) {
                 List<StoreItemDTO> storeItemDTOList = member.get().getStoreItemDTOList();
                 storeItemDTOList = storeItemDTOList.subList(0, Math.min(storeItemDTOList.size(), 3));
                 model.addAttribute("myItem", storeItemDTOList);
+                model.addAttribute("sessionUsername", user.getUsername());
+                model.addAttribute("nickname", member.get().getUsername());
             }
         }
         List<StoreItemDTO> storeItemDTOList = storeItemService.getRecentItems();

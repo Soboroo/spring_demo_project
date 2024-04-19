@@ -20,12 +20,12 @@
             </div>
             <div class="media-content">
                 <p th:text="|*{getTitle()}|" class="subtitle is-6"></p>
-                <p th:text="|*{getPrice()}원|" class="title is-4"></p>
+                <p th:text="|*{#numbers.formatInteger(getPrice(), 1, 'COMMA')}원|" class="title is-4"></p>
             </div>
         </div>
 
         <div th:text="*{getDescription()}" class="content"></div>
-        <time th:text="*{getCreatedAt()}" datetime="2016-1-1"></time>
+        <time th:text="*{#dates.format(getCreatedAt(), 'yyyy.MM.dd HH:mm')}" datetime="2016-1-1"></time>
     </div>
 </div>
 </body>

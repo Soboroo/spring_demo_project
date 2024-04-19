@@ -52,8 +52,8 @@ public class VerificationController {
     }
 
     @GetMapping("/welcome")
-    public String welcome(Model model) {
-        model.addAttribute("username", "Yeongyun Woo");
+    public String welcome(Model model, @RequestParam(value="username") String username) {
+        model.addAttribute("username", username);
         return "welcome";
     }
 

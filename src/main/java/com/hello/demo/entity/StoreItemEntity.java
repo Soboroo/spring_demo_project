@@ -23,14 +23,11 @@ public class StoreItemEntity {
     private String imageUrl;
     private int price;
     private boolean isAvailable;
-    private boolean isDeleted;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt = new Date();
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date deletedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -45,10 +42,8 @@ public class StoreItemEntity {
         storeItemEntity.setImageUrl(storeItemDTO.getImageUrl());
         storeItemEntity.setPrice(storeItemDTO.getPrice());
         storeItemEntity.setAvailable(storeItemDTO.isAvailable());
-        storeItemEntity.setDeleted(storeItemDTO.isDeleted());
         storeItemEntity.setCreatedAt(storeItemDTO.getCreatedAt());
         storeItemEntity.setUpdatedAt(storeItemDTO.getUpdatedAt());
-        storeItemEntity.setDeletedAt(storeItemDTO.getDeletedAt());
         storeItemEntity.setMemberEntity(memberEntity);
         return storeItemEntity;
     }

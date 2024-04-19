@@ -9,25 +9,8 @@
 <body>
     <div th:replace="~{fragment/navbar :: navbarFragment(${sessionUsername})}"></div>
     <div class="container">
+        <h1 class="title">상품 정보 수정</h1>
         <div class="tile is-ancestor is-vertical">
-            <div class="tile is-parent">
-                <h1 class="title">상품 정보 수정</h1>
-                <div class="tile is-child box">
-                    <div class="file is-boxed">
-                        <label class="file-label">
-                            <input class="file-input" type="file" name="resume">
-                            <span class="file-cta">
-                                <span class="file-icon">
-                                    <i class="fas fa-upload"></i>
-                                </span>
-                                <span class="file-label">
-                                    Choose a file…
-                                </span>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-            </div>
             <div th:object="${item}" class="tile is-parent">
                 <form id="update_form" action="/api/item/update" method="post">
                 <div class="tile is-child box">

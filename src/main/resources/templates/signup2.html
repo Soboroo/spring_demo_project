@@ -13,7 +13,7 @@
             <div class="tile is-parent is-vertical">
                 <div class="tile is-child box">
                     <h1 class="title">회원가입</h1>
-                    <form id="signup_form" action="/api/signup" method="post"> <!-- /api/signup 구현 및 permit all 필요. Student Verification key 추가 및 검사 -->
+                    <form id="signup_form" action="/api/signup" method="post">
                         <div class="field">
                             <label class="label">학교 이메일</label>
                             <div class="control">
@@ -79,8 +79,7 @@
             });
             const result = response.status;
             if (result === 200) {
-                alert('회원가입 성공');
-                location.href = '/';
+                location.href = '/welcome?username=' + username;
             } else {
                 alert('회원가입 실패');
             }
