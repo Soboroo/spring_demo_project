@@ -22,8 +22,7 @@ public class MemberDetailService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<MemberDTO> find = memberService.findByEmail(email);
-        MemberDTO member = find.orElseThrow(() -> new UsernameNotFoundException("없는 회원입니다 ㅠ"));
-        System.out.printf("MemberDetailService.loadUserByUsername: member = %s\n", member);
+        MemberDTO member = find.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return User.builder()
                 .username(member.getEmail())

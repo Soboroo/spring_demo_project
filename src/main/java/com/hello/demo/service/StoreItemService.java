@@ -68,4 +68,14 @@ public class StoreItemService {
     public void deleteItem(String itemId) {
         storeItemRepository.deleteByItemId(itemId);
     }
+
+    public void updateSoldOut(String itemId) {
+        Optional<StoreItemEntity> storeItemEntity = storeItemRepository.findByItemId(itemId);
+        if (storeItemEntity.isPresent()) {
+            storeItemEntity.get().setAvailable(false);
+            storeItemRepository.save(storeItemEntity.get());
+        } else {
+            throw new IllegalArgumentException("Item not found");
+        }
+    }
 }

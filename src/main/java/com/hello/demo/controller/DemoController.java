@@ -29,6 +29,7 @@ public class DemoController {
             Optional<MemberDTO> member = memberService.findByEmail(user.getUsername());
             if (member.isPresent()) {
                 List<StoreItemDTO> storeItemDTOList = member.get().getStoreItemDTOList();
+                storeItemDTOList = storeItemDTOList.stream().filter(StoreItemDTO::isAvailable).toList();
                 storeItemDTOList = storeItemDTOList.subList(0, Math.min(storeItemDTOList.size(), 3));
                 model.addAttribute("myItem", storeItemDTOList);
                 model.addAttribute("sessionUsername", user.getUsername());

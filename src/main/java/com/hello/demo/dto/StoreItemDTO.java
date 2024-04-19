@@ -20,7 +20,7 @@ public class StoreItemDTO {
     private String description;
     private String imageUrl;
     private int price;
-    private boolean isAvailable;
+    private boolean isAvailable = true;
     private Date createdAt = new Date();
     private Date updatedAt;
 

@@ -6,9 +6,14 @@
 </head>
 <body>
 <div th:fragment="cardFragment(item)" th:object="${item}" th:onclick="|location.href='@{/item(itemId=*{getItemId()})}'|" class="card">
+    <div th:if="${not item.isAvailable()}" class="unavailable-overlay">
+        <div id="sold" class="has-text-centered">
+            <p class="title is-4 has-text-white">판매완료</p>
+        </div>
+    </div>
     <div class="card-image">
         <figure class="image is-4by3">
-            <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder image">
+            <img id="card-image" src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder image">
         </figure>
     </div>
     <div class="card-content">
@@ -27,6 +32,28 @@
         <div th:text="*{getDescription()}" class="content"></div>
         <time th:text="*{#dates.format(getCreatedAt(), 'yyyy.MM.dd HH:mm')}" datetime="2016-1-1"></time>
     </div>
+    <style>
+        .unavailable-overlay {
+            position: absolute;
+            border-radius: var(--bulma-card-radius);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1;
+        }
+        #sold {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #card-image {
+            border-top-left-radius: var(--bulma-card-radius);
+            border-top-right-radius: var(--bulma-card-radius);
+        }
+    </style>
 </div>
 </body>
 </html>

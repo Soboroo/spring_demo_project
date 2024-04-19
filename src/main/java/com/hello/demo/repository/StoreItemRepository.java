@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface StoreItemRepository extends JpaRepository<StoreItemEntity, Long>{
     List<StoreItemEntity> findTop4ByOrderByCreatedAtDesc();
+    List<StoreItemEntity> findTop4ByIsAvailableTrueOrderByCreatedAtDesc();
     Optional<StoreItemEntity> findByItemId(String itemId);
     void deleteByItemId(String itemId);
 }

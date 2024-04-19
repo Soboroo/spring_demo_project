@@ -22,7 +22,7 @@ public class StoreItemEntity {
     private String description;
     private String imageUrl;
     private int price;
-    private boolean isAvailable;
+    private boolean isAvailable = true;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt = new Date();

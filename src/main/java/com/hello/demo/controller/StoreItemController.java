@@ -90,12 +90,14 @@ public class StoreItemController {
             return ResponseEntity.badRequest().build();
         }
         if (memberService.isMyItem(memberService.findByEmail(user.getUsername()).get(), storeItemDTO.getItemId())) {
-            System.out.println(storeItemDTO);
-            storeItemService.updateItem(storeItemDTO);
-            return ResponseEntity.ok(storeItemDTO.getItemId());
-        } else {
-            return ResponseEntity.badRequest().build();
+            if (storeItemService.findByItemId(storeItemDTO.getItemId()).isAvailable()) {
+                storeItemService.updateItem(storeItemDTO);
+                return ResponseEntity.ok(storeItemDTO.getItemId());
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
         }
+        return ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/api/item/delete")
@@ -109,5 +111,21 @@ public class StoreItemController {
         } else {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/api/item/update/soldout")
+    public ResponseEntity itemSoldOut(@AuthenticationPrincipal User user, @RequestParam(value="itemId") String itemId) {
+        if (user == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (memberService.isMyItem(memberService.findByEmail(user.getUsername()).get(), itemId)) {
+            if (storeItemService.findByItemId(itemId).isAvailable()) {
+                storeItemService.updateSoldOut(itemId);
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        }
+        return ResponseEntity.badRequest().build();
     }
 }
