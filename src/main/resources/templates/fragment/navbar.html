@@ -10,7 +10,6 @@
         <a class="navbar-item" href="/">
                 <img src="/img/soondae_market.svg" alt="logo" style="height: 52rem">
         </a>
-
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -21,11 +20,11 @@
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" href="/">
-                Home
+                홈
             </a>
 
             <a class="navbar-item" href="/items">
-                Shop
+                상점
             </a>
         </div>
 
@@ -33,10 +32,10 @@
             <div th:if="${#strings.isEmpty(username)}" class="navbar-item">
                 <div class="buttons">
                     <a href="/signup" class="button is-primary">
-                        <strong>Sign up</strong>
+                        <strong>회원가입</strong>
                     </a>
                     <a href="/login" class="button is-light">
-                        Log in
+                        로그인
                     </a>
                 </div>
             </div>
@@ -45,11 +44,14 @@
 
                 <div class="navbar-dropdown">
                     <a href="/item/create" class="navbar-item">
-                        Add Item
+                        상품 등록
+                    </a>
+                    <a href="/myItems" class="navbar-item">
+                        내 상품 목록
                     </a>
                     <hr class="navbar-divider">
                     <a href="/logout" class="navbar-item">
-                        Logout
+                        로그아웃
                     </a>
                 </div>
             </div>

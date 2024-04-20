@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <title th:text="|${item.getTitle()} - 순대마켓 Soondae Market|">순대마켓 Soondae Market</title>
+    <link rel="stylesheet" href="/css/bulma.min.css">
 </head>
 <body>
     <div th:replace="~{fragment/navbar :: navbarFragment(${sessionUsername})}"></div>
@@ -25,7 +25,7 @@
                     <h1 class="title" th:text="|*{#numbers.formatInteger(getPrice(), 1, 'COMMA')}원|">Price</h1>
                     <h1 class="sub-title is-4" th:text="*{getDescription()}">Description</h1>
                     <div th:if="*{isAvailable()} and not ${isMyItem}">
-                        <button id="contact" class="button is-primary is-outlined">판매자에게 연략하기</button>
+                        <button id="contact" class="button is-primary is-outlined">판매자에게 연락하기</button>
                     </div>
                     <article th:unless="*{isAvailable()}" class="message is-info">
                         <div class="message-body">

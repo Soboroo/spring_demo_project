@@ -26,7 +26,7 @@ class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/signup", "/", "/logout", "/item", "/items", "/api/login", "/api/signup/verification", "/signup/step2", "/api/signup", "/welcome", "/img/**").permitAll()
+                        .requestMatchers("/signup", "/", "/logout", "/item", "/items", "/api/login", "/api/signup/verification", "/signup/step2", "/api/signup", "/welcome", "/img/**", "/css/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
