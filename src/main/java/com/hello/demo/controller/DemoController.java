@@ -2,7 +2,6 @@ package com.hello.demo.controller;
 
 import com.hello.demo.dto.MemberDTO;
 import com.hello.demo.dto.StoreItemDTO;
-import com.hello.demo.entity.MemberEntity;
 import com.hello.demo.service.MemberService;
 import com.hello.demo.service.StoreItemService;
 import jakarta.transaction.Transactional;

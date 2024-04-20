@@ -24,9 +24,9 @@
                     <h1 th:if="*{getUpdatedAt()}" class="sub-title is-4" th:text="|수정일: *{#dates.format(getUpdatedAt(), 'yyyy.MM.dd HH:mm')}|">Updated At</h1>
                     <h1 class="title" th:text="|*{#numbers.formatInteger(getPrice(), 1, 'COMMA')}원|">Price</h1>
                     <h1 class="sub-title is-4" th:text="*{getDescription()}">Description</h1>
-<!--                    <div>-->
-<!--                        <button class="button is-primary is-outlined">판매자와 채팅</button>-->
-<!--                    </div>-->
+                    <div th:if="*{isAvailable()} and not ${isMyItem}">
+                        <button id="contact" class="button is-primary is-outlined">판매자에게 연략하기</button>
+                    </div>
                     <article th:unless="*{isAvailable()}" class="message is-info">
                         <div class="message-body">
                             판매 완료된 상품입니다.
@@ -82,6 +82,12 @@
         <button class="modal-close is-large" aria-label="close"></button>
     </div>
     <script>
+        const contactButton = document.querySelector('#contact');
+        contactButton.addEventListener('click', () => {
+            let email = '[[${item.getMemberDTO().getEmail()}]]';
+            location.href = 'mailto:' + email;
+        });
+
         const deleteButton = document.querySelector('#modal-delete');
         deleteButton.addEventListener('click', async () => {
             const itemId = new URLSearchParams(location.search).get('itemId');
