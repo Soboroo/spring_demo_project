@@ -35,6 +35,18 @@ public class StoreItemController {
         return "items";
     }
 
+    @GetMapping("/myItems")
+    public String myItems(@AuthenticationPrincipal User user, Model model) {
+        if (user != null) {
+            model.addAttribute("sessionUsername", user.getUsername());
+            MemberDTO memberDTO = memberService.findByEmail(user.getUsername()).get();
+            List<StoreItemDTO> storeItems = memberDTO.getStoreItemDTOList();
+            model.addAttribute("items", storeItems);
+        }
+
+        return "myItems";
+    }
+
     @GetMapping("/item")
     public String item(@AuthenticationPrincipal User user, Model model, @RequestParam(value="itemId") String itemId){
         if (user != null) {
