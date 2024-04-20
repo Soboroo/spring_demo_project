@@ -82,11 +82,15 @@
         <button class="modal-close is-large" aria-label="close"></button>
     </div>
     <script>
-        const contactButton = document.querySelector('#contact');
-        contactButton.addEventListener('click', () => {
-            let email = '[[${item.getMemberDTO().getEmail()}]]';
-            location.href = 'mailto:' + email;
-        });
+        try {
+            const contactButton = document.querySelector('#contact');
+            contactButton.addEventListener('click', () => {
+                let email = '[[${item.getMemberDTO().getEmail()}]]';
+                location.href = 'mailto:' + email;
+            });
+        } catch (e) {
+            // Item owner
+        }
 
         const deleteButton = document.querySelector('#modal-delete');
         deleteButton.addEventListener('click', async () => {
