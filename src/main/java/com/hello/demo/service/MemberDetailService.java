@@ -1,7 +1,6 @@
 package com.hello.demo.service;
 
 import com.hello.demo.dto.MemberDTO;
-import com.hello.demo.entity.MemberEntity;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -19,6 +18,7 @@ public class MemberDetailService implements UserDetailsService {
     private final MemberService memberService;
 
     @Override
+    // LazyInitializationException 방지를 위해 @Transactional 어노테이션 추가
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<MemberDTO> find = memberService.findByEmail(email);

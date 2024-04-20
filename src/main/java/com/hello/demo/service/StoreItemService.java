@@ -30,7 +30,7 @@ public class StoreItemService {
         return storeItemDTOList;
     }
 
-    public List<StoreItemDTO> getAllItems(int page) {
+    public List<StoreItemDTO> getAllItems(int page) { // /items 페이지에서 8개마다 페이지를 나눠서 보여줍니다.
         Pageable pageable = PageRequest.of(page - 1, 8, Sort.by("createdAt").descending());
         List<StoreItemDTO> storeItemDTOList = storeItemRepository.findAll(pageable).stream().map((x) -> StoreItemDTO.toStoreItemDTO(x, MemberDTO.toMemberDTO(x.getMemberEntity()))).toList();
         return storeItemDTOList;

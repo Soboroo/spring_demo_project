@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-class SecurityConfig {
+class SecurityConfig { // Spring Security 설정
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

@@ -6,10 +6,6 @@ import com.hello.demo.entity.StudentVerificationEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.regex.Pattern;
-
 @Service
 @RequiredArgsConstructor
 public class StudentVerificationService {
@@ -30,8 +26,8 @@ public class StudentVerificationService {
     public boolean verification(String email, String key) {
         StudentVerificationEntity studentVerificationEntity = studentVerificationRepository.findByEmail(email).orElse(null);
         if (studentVerificationEntity != null) {
-            if (studentVerificationEntity.getKey().equals(key)) {
-                if (studentVerificationEntity.getExpiredAt().getTime() > System.currentTimeMillis()) {
+            if (studentVerificationEntity.getKey().equals(key)) { // 인증 키 일치
+                if (studentVerificationEntity.getExpiredAt().getTime() > System.currentTimeMillis()) { // 인증 시간 확인
                     return true;
                 } else {
                     studentVerificationRepository.delete(studentVerificationEntity);

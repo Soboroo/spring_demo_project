@@ -19,7 +19,7 @@ public class StudentVerificationDTO {
     private String email;
     private String key;
     private Date createdAt = new Date();
-    private Date expiredAt = new Date(System.currentTimeMillis() + 20 * 60 * 1000);
+    private Date expiredAt = new Date(System.currentTimeMillis() + 20 * 60 * 1000); // 20분 뒤 만료
 
     public static StudentVerificationDTO toStudentVerificationDTO(StudentVerificationEntity studentVerificationEntity) {
         StudentVerificationDTO studentVerificationDTO = new StudentVerificationDTO();

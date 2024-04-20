@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = "storeItemDTOList")
+@ToString(exclude = "storeItemDTOList") // toMemberDTO 메서드에서 stackoverflow 방지
 public class MemberDTO {
     private Long pk;
     private String userId;
@@ -23,6 +23,7 @@ public class MemberDTO {
 
     private List<StoreItemDTO> storeItemDTOList = new ArrayList<>();
 
+    // 데이터베이스와 통신할 때는 Entity로 변환해서 통신하고, 클라이언트와 통신할 때는 DTO로 변환해서 통신합니다.
     public static MemberDTO toMemberDTO(MemberEntity memberEntity) {
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setPk(memberEntity.getPk());
@@ -32,7 +33,7 @@ public class MemberDTO {
         memberDTO.setPassword(memberEntity.getPassword());
         memberDTO.setRole(memberEntity.getRole());
         if (memberEntity.getStoreItemEntities() != null && !memberEntity.getStoreItemEntities().isEmpty())
-        memberDTO.setStoreItemDTOList(memberEntity.getStoreItemEntities().stream().map((x) -> StoreItemDTO.toStoreItemDTO(x, memberDTO)).toList());
+            memberDTO.setStoreItemDTOList(memberEntity.getStoreItemEntities().stream().map((x) -> StoreItemDTO.toStoreItemDTO(x, memberDTO)).toList());
         return memberDTO;
     }
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder; // 비밀번호 암호화를 위한 Spring Security PasswordEncoder
 
     public void join(MemberDTO member) {
         member.setPassword(passwordEncoder.encode(member.getPassword()));

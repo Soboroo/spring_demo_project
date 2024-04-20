@@ -83,7 +83,8 @@ public class StoreItemController {
 
         return "updateItem";
     }
-
+    // API로 따로 분리하여 요청하는 것을 선호하기 때문에 이를 분리했습니다.
+    // HTML의 form 태그를 사용하여 다음과 같은 endpoint로 요청으로 보냅니다.
     @PostMapping("/api/item/create")
     public ResponseEntity itemCreate(@AuthenticationPrincipal User user, @ModelAttribute StoreItemDTO storeItemDTO) {
         if (user == null) {
@@ -101,7 +102,9 @@ public class StoreItemController {
         if (user == null) {
             return ResponseEntity.badRequest().build();
         }
+        // 해당 상품이 내 상품인지 확인합니다.
         if (memberService.isMyItem(memberService.findByEmail(user.getUsername()).get(), storeItemDTO.getItemId())) {
+            // 판매 완료된 상품의 경우 수정할 수 없도록 했습니다.
             if (storeItemService.findByItemId(storeItemDTO.getItemId()).isAvailable()) {
                 storeItemService.updateItem(storeItemDTO);
                 return ResponseEntity.ok(storeItemDTO.getItemId());

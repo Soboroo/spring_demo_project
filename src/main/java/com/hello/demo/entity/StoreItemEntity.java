@@ -29,10 +29,14 @@ public class StoreItemEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    // 일대다 설정시 LazyInitializationException이 발생했습니다.
+    // 여러가지 시도한 결과 FetchType.LAZY 사용과 @Transactional의 사용이 도움이 되었습니다.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private MemberEntity memberEntity;
 
+    // setMemberEntity에서 toMemberEntity를 사용하면 stackoverflow가 발생합니다.
+    // 따라서 setMemberEntity에서는 MemberEntity를 직접 넣어주는 것으로 수정했습니다.
     public static StoreItemEntity toStoreItemEntity(StoreItemDTO storeItemDTO, MemberEntity memberEntity) {
         StoreItemEntity storeItemEntity = new StoreItemEntity();
         storeItemEntity.setPk(storeItemDTO.getPk());

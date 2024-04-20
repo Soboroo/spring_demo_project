@@ -68,7 +68,7 @@
             }
             const email = formData.get('email');
             const username = formData.get('username');
-            const password = window.CryptoJS.SHA256(formData.get('password')).toString();
+            const password = window.CryptoJS.SHA256(formData.get('password')).toString(); // SHA-256 암호화
             formData.set('email', new URLSearchParams(location.search).get('email'));
             formData.set('username', username);
             formData.set('password', password);

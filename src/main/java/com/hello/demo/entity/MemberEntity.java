@@ -21,13 +21,14 @@ public class MemberEntity {
     private String userId;
     private String email;
     private String username;
-    private String password;
+    private String password; // 평문으로 저장하지 않습니다. 클라이언트에서 CryptoJS를 통해 SHA256으로 해싱합니다.
     private String role = "Member"; // 가지고 있는 권한 정보
 
-    @OneToMany(mappedBy = "memberEntity")
+    @OneToMany(mappedBy = "memberEntity") // 멤버는 여러개의 상품을 가지고 있기에 OneToMany로 설정했습니다.
     @OrderBy("createdAt DESC")
     private List<StoreItemEntity> storeItemEntities = new ArrayList<>();
 
+    // 데이터베이스와 통신할 때는 Entity로 변환해서 통신하고, 클라이언트와 통신할 때는 DTO로 변환해서 통신합니다.
     public static MemberEntity toMemberEntity(MemberDTO memberDTO) {
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setPk(memberDTO.getPk());
@@ -37,7 +38,7 @@ public class MemberEntity {
         memberEntity.setPassword(memberDTO.getPassword());
         memberEntity.setRole(memberDTO.getRole());
         if (memberDTO.getStoreItemDTOList() != null && !memberDTO.getStoreItemDTOList().isEmpty())
-        memberEntity.setStoreItemEntities(memberDTO.getStoreItemDTOList().stream().map((x) -> StoreItemEntity.toStoreItemEntity(x, memberEntity)).toList());
+            memberEntity.setStoreItemEntities(memberDTO.getStoreItemDTOList().stream().map((x) -> StoreItemEntity.toStoreItemEntity(x, memberEntity)).toList());
         return memberEntity;
     }
 }
